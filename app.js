@@ -5,14 +5,15 @@ import { Provider } from 'react-redux';
 import Home from './components/home';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import { Router, browserHistory } from 'react-router';
+import routes from './routes';
+import './node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
-var routes = (
+ReactDOM.render(
   <Provider store={store}>
-    <Home/>
-  </Provider>
-);
-
-ReactDOM.render(routes, document.getElementById('root'));
+    <Router history={browserHistory} routes={routes} />
+  </Provider>,
+  document.getElementById('root'));

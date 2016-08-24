@@ -5,7 +5,6 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     bundle: './app.js',
-    local: './utils/local-utils.js'
   },
   output: {
     path: path.join(__dirname, 'dist'),
