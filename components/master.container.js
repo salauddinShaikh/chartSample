@@ -12,10 +12,10 @@ class MasterContainer extends React.Component {
                 <nav className="navbar navbar-inverse">
                     <div className="container-fluid">
                         <div className="navbar-header">
-                            <a className="navbar-brand" href="#">High Chart</a>
+                            <Link to={'/'} className="navbar-brand">High Chart</Link>
                         </div>
                         <ul className="nav navbar-nav">
-                            <li className="active"><a href="#">Home</a></li>
+                            <li><Link to={'/'}>Home</Link></li>
                             <li><Link to={'advanceChart'}>Advance Chart</Link></li>
                         </ul>
                     </div>

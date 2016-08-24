@@ -6,7 +6,7 @@
     "build": "npm run clear-dist && webpack",
     "build-prod": "webpack --config webpack.config.prod.js",
     "clear-dist": "rm -Rf dist/",
-    "start": "npm run clear-dist && node nodemon.js"
+    "start": "node nodemon.js"
   },
   "dependencies": {
     "ejs": "^2.4.2",
