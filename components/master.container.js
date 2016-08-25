@@ -18,6 +18,9 @@ class MasterContainer extends React.Component {
                             <li><Link to={'/'}>Home</Link></li>
                             <li><Link to={'advanceChart'}>Advance Charts</Link></li>
                             <li><Link to={'stockChart'}>Stock Charts</Link></li>
+                            <li><Link to={'lineChart'}>Line Charts</Link></li>
+                            <li><Link to={'barChart'}>Bar Charts</Link></li>
+                            <li><Link to={'pieChart'}>Pie Charts</Link></li>
                         </ul>
                     </div>
                 </nav>
