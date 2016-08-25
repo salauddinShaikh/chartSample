@@ -16,7 +16,8 @@ class MasterContainer extends React.Component {
                         </div>
                         <ul className="nav navbar-nav">
                             <li><Link to={'/'}>Home</Link></li>
-                            <li><Link to={'advanceChart'}>Advance Chart</Link></li>
+                            <li><Link to={'advanceChart'}>Advance Charts</Link></li>
+                            <li><Link to={'stockChart'}>Stock Charts</Link></li>
                         </ul>
                     </div>
                 </nav>

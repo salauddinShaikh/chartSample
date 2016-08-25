@@ -298,6 +298,7 @@ class Home extends Component {
                             <Chart container="optionsLineMultiple" options={this.state.optionsLineMultiple}/>
                         </div>
                     </div>
+                    <hr/>
                      <div className="row">
                         <div className="col-md-6">
                             <Chart container="optionsAreaStack" options={this.state.optionsAreaStack}/>

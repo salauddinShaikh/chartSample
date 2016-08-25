@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Highcharts from 'highcharts';
+//import Highcharts from 'highcharts';
+import Highcharts from 'highcharts/highstock';
 
+// Apply the theme
+//Highcharts.setOptions(Highcharts.theme);
 class Chart extends Component {
     constructor(props) {
         super(props);
