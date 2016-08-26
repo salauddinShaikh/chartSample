@@ -7,6 +7,7 @@ import LineChart from './components/lineChart';
 import BarChart from './components/barChart';
 import PieChart from './components/pieChart';
 import AreaChart from './components/areaChart';
+import DynamicChart from './components/dynamicChart';
 import MasterContainer from './components/master.container';
 
 
@@ -19,6 +20,7 @@ export default(
         <Route path='barChart' component={BarChart} />
         <Route path='pieChart' component={PieChart} />
         <Route path='areaChart' component={AreaChart} />
+        <Route path='dynamicChart' component={DynamicChart} />
         <IndexRoute component={Home} />
       </Route>
 );

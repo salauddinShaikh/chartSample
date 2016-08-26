@@ -23,6 +23,7 @@ class MasterContainer extends React.Component {
                             <li><Link to={'barChart'}>Bar Charts</Link></li>
                             <li><Link to={'pieChart'}>Pie Charts</Link></li>
                             <li><Link to={'areaChart'}>Area Charts</Link></li>
+                            <li><Link to={'dynamicChart'}>Dynamic & 3D Charts</Link></li>
                         </ul>
                     </div>
                 </nav>
