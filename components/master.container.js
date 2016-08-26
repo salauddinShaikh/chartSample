@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import { Link } from 'react-router';
+import 'highcharts/highcharts-more';
 
 class MasterContainer extends React.Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class MasterContainer extends React.Component {
                             <li><Link to={'lineChart'}>Line Charts</Link></li>
                             <li><Link to={'barChart'}>Bar Charts</Link></li>
                             <li><Link to={'pieChart'}>Pie Charts</Link></li>
+                            <li><Link to={'areaChart'}>Area Charts</Link></li>
                         </ul>
                     </div>
                 </nav>
