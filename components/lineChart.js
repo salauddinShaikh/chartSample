@@ -252,6 +252,11 @@ class LineChart extends Component {
         if (!_.isEmpty(this.state.optionsLineZoom)) {
             return (
                 <div>
+                   <div className="row">
+                        <div className="col-lg-12">
+                            <h1 className="page-header">Line Chart</h1>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-md-6">
                             <Chart container="optionsLineMultiple" options={this.state.optionsLineMultiple}/>

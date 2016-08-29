@@ -1,6 +1,13 @@
 import React, {PropTypes} from 'react';
-import { Link } from 'react-router';
 import 'highcharts/highcharts-more';
+import HeaderContainer from './common/header.container';
+import MenuContainer from './common/menu.container';
+
+const styles = {
+    navbar: {
+        marginBottom: 0
+    },
+}
 
 class MasterContainer extends React.Component {
     constructor(props) {
@@ -10,24 +17,26 @@ class MasterContainer extends React.Component {
     render() {
         return (
             <div>
-                <nav className="navbar navbar-inverse">
-                    <div className="container-fluid">
-                        <div className="navbar-header">
-                            <Link to={'/'} className="navbar-brand">High Chart</Link>
+                {
+                    this.props.location.pathname === "/login" ?
+                        <div>
+                            {this.props.children}
                         </div>
-                        <ul className="nav navbar-nav">
-                            <li><Link to={'/'}>Home</Link></li>
-                            <li><Link to={'advanceChart'}>Advance Charts</Link></li>
-                            <li><Link to={'stockChart'}>Stock Charts</Link></li>
-                            <li><Link to={'lineChart'}>Line Charts</Link></li>
-                            <li><Link to={'barChart'}>Bar Charts</Link></li>
-                            <li><Link to={'pieChart'}>Pie Charts</Link></li>
-                            <li><Link to={'areaChart'}>Area Charts</Link></li>
-                            <li><Link to={'dynamicChart'}>Dynamic & 3D Charts</Link></li>
-                        </ul>
-                    </div>
-                </nav>
-                {this.props.children}
+                        :
+                        <div>
+                            <div id="wrapper">
+                                <nav className="navbar navbar-default navbar-static-top" role="navigation" style={styles.navbar}>
+                                    <HeaderContainer />
+                                    <MenuContainer />
+                                </nav>
+                                <div id="page-wrapper">
+                                    <div className="container-fluid">
+                                        {this.props.children}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                }
             </div>
         );
     }

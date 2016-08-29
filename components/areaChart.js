@@ -450,6 +450,11 @@ class AreaChart extends Component {
         if (!_.isEmpty(this.state.optionsAreaBasic)) {
             return (
                 <div>
+                   <div className="row">
+                        <div className="col-lg-12">
+                            <h1 className="page-header">Area Chart</h1>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-md-6">
                             <Chart container="optionsAreaBasic" options={this.state.optionsAreaBasic}/>

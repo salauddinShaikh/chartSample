@@ -325,6 +325,11 @@ class DynamicChart extends Component {
         if (!_.isEmpty(this.state.optionsSpline)) {
             return (
                 <div>
+                   <div className="row">
+                        <div className="col-lg-12">
+                            <h1 className="page-header">Dynamic and 3D Chart</h1>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-md-6">
                             <Chart container="optionsSpline" options={this.state.optionsSpline}/>

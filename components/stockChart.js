@@ -127,6 +127,11 @@ class StockChart extends Component {
         if (!_.isEmpty(this.state.optionsStock)) {
             return (
                 <div>
+                   <div className="row">
+                        <div className="col-lg-12">
+                            <h1 className="page-header">Stock Chart</h1>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-md-6">
                             <Chart container="optionsStock" options={this.state.optionsStock} type="StockChart"/>

@@ -73,7 +73,7 @@ class Home extends Component {
                         data: [32, 17, 25]
                     }]
             },
-            columnBasic : {
+            columnBasic: {
                 chart: {
                     renderTo: 'container',
                     type: 'column'
@@ -143,127 +143,127 @@ class Home extends Component {
                     fillOpacity: 0.5
                 }]
             },
-             optionsLineZoom : {
-              chart: {
-                        renderTo: 'container',
-                        type: 'spline',
-                        zoomType: 'x'
-                    },
-                    plotOptions: {
-                        line: {
-                            dataLabels: {
-                                enabled: true
-                            }
+            optionsLineZoom: {
+                chart: {
+                    renderTo: 'container',
+                    type: 'spline',
+                    zoomType: 'x'
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
                         }
-                    },
-                    title: {
-                        text: 'Profit Ratio by Month'
-                    },
-                    subtitle: {
-                        text: 'last 12 months'  
-                    },
-                    xAxis: {
-                        categories: [
-                            'Jan','Feb','Mar','Apr','May','Jun',
-                            'Jul','Aug','Sep','Oct','Nov','Dec'
-                        ]
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Profit %'
-                        }
-                    },
-                    series: [{
-                        name: 'Chairs',
-                        data: [                         
-                            -10, -6, -1, 2, 5, 7, 9, 12, 8, 6, 10, 7
-                        ]
-                        },{
-                            name: 'Tables',
-                            data: [                         
-                                4, 2, 7, 9, 11, 13, 20, 14, 8, 9, 13, 19
-                            ]
-                        }
+                    }
+                },
+                title: {
+                    text: 'Profit Ratio by Month'
+                },
+                subtitle: {
+                    text: 'last 12 months'
+                },
+                xAxis: {
+                    categories: [
+                        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
                     ]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Profit %'
+                    }
+                },
+                series: [{
+                    name: 'Chairs',
+                    data: [
+                        -10, -6, -1, 2, 5, 7, 9, 12, 8, 6, 10, 7
+                    ]
+                }, {
+                        name: 'Tables',
+                        data: [
+                            4, 2, 7, 9, 11, 13, 20, 14, 8, 9, 13, 19
+                        ]
+                    }
+                ]
             },
-            optionsLineMultiple : {
-              chart: {
-                        renderTo: 'container',
-                        type: 'line'
-                    },
-                    title: {
-                        text: 'Profit Ratio by Month'
-                    },
-                    subtitle: {
-                        text: 'last 12 months'  
-                    },
-                    xAxis: {
-                        categories: [
-                            'Jan','Feb','Mar','Apr','May','Jun',
-                            'Jul','Aug','Sep','Oct','Nov','Dec'
-                        ]
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Profit % by Sector'
-                        }
-                    },
-                    series: [{
-                        name: 'Tech',
-                        data: [                         
-                            -10, -6, -1, 2, 5, 7, 9, 12, 8, 6, 10, 7
-                        ]
-                        },{
-                            name: 'Retail',
-                            data: [                         
-                                4, 2, 7, 9, 11, 13, 20, 14, 8, 9, 13, 19
-                            ]
-                        }
+            optionsLineMultiple: {
+                chart: {
+                    renderTo: 'container',
+                    type: 'line'
+                },
+                title: {
+                    text: 'Profit Ratio by Month'
+                },
+                subtitle: {
+                    text: 'last 12 months'
+                },
+                xAxis: {
+                    categories: [
+                        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
                     ]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Profit % by Sector'
+                    }
+                },
+                series: [{
+                    name: 'Tech',
+                    data: [
+                        -10, -6, -1, 2, 5, 7, 9, 12, 8, 6, 10, 7
+                    ]
+                }, {
+                        name: 'Retail',
+                        data: [
+                            4, 2, 7, 9, 11, 13, 20, 14, 8, 9, 13, 19
+                        ]
+                    }
+                ]
             },
-             optionsAreaStack : {
-              chart: {
-                        renderTo: 'container',
-                        type: 'area'
-                    },
-                    plotOptions: {
-                        area: {
-                            stacking: 'normal'
-                        }
-                    },
-                    tooltip: {
-                        shared: true,
-                        valueSuffix: ' %'
-                    },
-                    title: {
-                        text: 'Profit Ratio by Month'
-                    },
-                    subtitle: {
-                        text: 'last 12 months'  
-                    },
-                    xAxis: {
-                        categories: [
-                            'Jan','Feb','Mar','Apr','May','Jun',
-                            'Jul','Aug','Sep','Oct','Nov','Dec'
-                        ]
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Profit %'
-                        }
-                    },
-                    series: [{
-                        name: 'Chairs',
-                        data: [                         
-                            3, 5, 2, 2, 5, 7, 9, 12, 8, 6, 10, 7
-                        ]
-                        },{
-                            name: 'Tables',
-                            data: [                         
-                                4, 2, 7, 9, 11, 13, 20, 14, 8, 9, 13, 19
-                            ]
-                        }
+            optionsAreaStack: {
+                chart: {
+                    renderTo: 'container',
+                    type: 'area'
+                },
+                plotOptions: {
+                    area: {
+                        stacking: 'normal'
+                    }
+                },
+                tooltip: {
+                    shared: true,
+                    valueSuffix: ' %'
+                },
+                title: {
+                    text: 'Profit Ratio by Month'
+                },
+                subtitle: {
+                    text: 'last 12 months'
+                },
+                xAxis: {
+                    categories: [
+                        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
                     ]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Profit %'
+                    }
+                },
+                series: [{
+                    name: 'Chairs',
+                    data: [
+                        3, 5, 2, 2, 5, 7, 9, 12, 8, 6, 10, 7
+                    ]
+                }, {
+                        name: 'Tables',
+                        data: [
+                            4, 2, 7, 9, 11, 13, 20, 14, 8, 9, 13, 19
+                        ]
+                    }
+                ]
             }
         });
     }
@@ -272,6 +272,11 @@ class Home extends Component {
         if (!_.isEmpty(this.state.optionsBar)) {
             return (
                 <div>
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <h1 className="page-header">Dashboard</h1>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-md-6">
                             <Chart container="barChart1" options={this.state.optionsBar}/>
@@ -299,7 +304,7 @@ class Home extends Component {
                         </div>
                     </div>
                     <hr/>
-                     <div className="row">
+                    <div className="row">
                         <div className="col-md-6">
                             <Chart container="optionsAreaStack" options={this.state.optionsAreaStack}/>
                         </div>

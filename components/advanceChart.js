@@ -342,6 +342,11 @@ class AdvanceChart extends Component {
             return (
                 <div>
                     <div className="row">
+                        <div className="col-lg-12">
+                            <h1 className="page-header">Advance Chart</h1>
+                        </div>
+                    </div>
+                    <div className="row">
                         <div className="col-md-6">
                             <Chart container="optionsFunnel" options={this.state.optionsFunnel} modules={[Funnel]}/>
                         </div>
