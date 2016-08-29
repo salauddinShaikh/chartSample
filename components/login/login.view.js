@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-class LoginView extends Component {
+export class LoginView extends Component {
     constructor(props) {
         super(props);
     }

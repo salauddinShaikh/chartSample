@@ -6,7 +6,8 @@
     "build": "npm run clear-dist && webpack",
     "build-prod": "webpack --config webpack.config.prod.js",
     "clear-dist": "rm -Rf dist/",
-    "start": "node nodemon.js"
+    "start": "node nodemon.js",
+    "test": "mocha --reporter spec testSetup.js components/tests/*.test.js "
   },
   "dependencies": {
     "ejs": "^2.4.2",
@@ -41,7 +42,12 @@
     "startbootstrap-sb-admin-2": "^1.0.7",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.0"
+    "webpack": "^1.13.0",
+    "react-addons-test-utils": "^15.1.0",
+    "mocha": "^2.5.3",
+    "enzyme": "^2.3.0",
+    "jsdom": "^9.2.1",
+    "expect": "^1.20.1"
   },
   "license": "ISC"
 }
