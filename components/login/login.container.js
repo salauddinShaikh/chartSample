@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import LoginView from './login.view';
-//import { authenticate } from '../../actions/login-action';
+import { authenticate } from '../../actions/login-action';
 
 class LoginContainer extends Component {
     constructor(props) {
@@ -16,9 +16,9 @@ class LoginContainer extends Component {
     }
 
     login() {
-        localStorage.setItem('userInfo', this.state.userName);
-        location.href = "/home";
-        //this.props.authenticate(this.state.userName,this.state.password);
+        //localStorage.setItem('userInfo', this.state.userName);
+        //location.href = "/home";
+        this.props.authenticate(this.state.userName,this.state.password);
     }
     handleUserNameChange(e) {
         this.setState({userName:e.target.value});
@@ -45,9 +45,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        // authenticate: (username,password) => {
-        //     dispatch(authenticate(username,password));
-        // }
+        authenticate: (username,password) => {
+            dispatch(authenticate(username,password));
+        }
     }
 }
 export default connect(

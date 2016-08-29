@@ -7,7 +7,7 @@ class HeaderContainer extends Component {
     }
 
     logout(){
-        localStorage.removeItem("userInfo");
+        localStorage.removeItem("accessToken");
         location.href="/login";
     }
     render() {

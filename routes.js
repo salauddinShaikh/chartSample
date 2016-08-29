@@ -30,7 +30,7 @@ export default (
 );
 
 function requireAuth(nextState, replace) {
-  if (localStorage.getItem('userInfo') === null) {
+  if (localStorage.getItem('accessToken') === null) {
     replace({
       pathname: '/login',
       state: { nextPathname: nextState.location.pathname }
