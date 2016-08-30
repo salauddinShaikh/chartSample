@@ -442,7 +442,6 @@ class AreaChart extends Component {
                         zIndex: 0
                     }]
             }
-
         });
     }
 

@@ -19,6 +19,38 @@ export default function AppReducer(state = initialState, action) {
                     return Object.assign([], state, {
                         homeColumnData: action.data
                     });
+                case "stock":
+                    return Object.assign([], state, {
+                        stockData: action.data
+                    });
+                case "stockMultiLine":
+                    return Object.assign([], state, {
+                        stockMultiLine: action.data
+                    });
+                case "stockIntraDay":
+                    return Object.assign([], state, {
+                        stockIntraDay: action.data
+                    });
+                case "lineZoom":
+                    return Object.assign([], state, {
+                        lineZoom: action.data
+                    });
+                case "lineMultiple":
+                    return Object.assign([], state, {
+                        lineMultiple: action.data
+                    });
+                case "lineSpline":
+                    return Object.assign([], state, {
+                        lineSpline: action.data
+                    });
+                case "lineSplineSymbol":
+                    return Object.assign([], state, {
+                        lineSplineSymbol: action.data
+                    });
+                case "lineLogarithmic":
+                    return Object.assign([], state, {
+                        lineLogarithmic: action.data
+                    });
             }
         default:
             return state;

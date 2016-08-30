@@ -258,7 +258,6 @@ class Home extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        debugger
         let optionsBar = this.state.optionsBar;
         optionsBar.series=[{data: newProps.homeBarData}];
         let optionsBarMultiple = this.state.optionsBarMultiple;
