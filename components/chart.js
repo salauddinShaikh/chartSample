@@ -23,6 +23,13 @@ class Chart extends Component {
         );
     }
 
+    componentWillReceiveProps(newProps) {
+       this.chart = new Highcharts[this.props.type || "Chart"](
+            this.props.container,
+            newProps.options
+        );
+    }
+
     componentWillUnmount() {
         this.chart.destroy();
     }

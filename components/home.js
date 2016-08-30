@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import Chart from './chart';
 import * as _ from 'lodash';
 import Funnel from 'highcharts/modules/funnel.src';
+import { getChartData } from '../actions/chart-action';
+
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -11,6 +13,9 @@ class Home extends Component {
         }
     }
     componentDidMount() {
+        this.props.getChartData("homeBar");
+        this.props.getChartData("homeBarMultiple");
+        this.props.getChartData("homeColumn");
         this.setState({
             optionsBar: {
                 chart: {
@@ -34,11 +39,7 @@ class Home extends Component {
                         text: 'Messages Sent'
                     }
                 },
-                series: [{
-                    data: [
-                        287, 232, 170
-                    ]
-                }]
+                series: []
             },
             optionsBarMultiple: {
                 chart: {
@@ -63,15 +64,7 @@ class Home extends Component {
                         text: 'Messages Sent'
                     }
                 },
-                series: [{
-                    name: 'Messages',
-                    data: [
-                        287, 232, 170
-                    ]
-                }, {
-                        name: 'Logins',
-                        data: [32, 17, 25]
-                    }]
+                series: []
             },
             columnBasic: {
                 chart: {
@@ -96,11 +89,7 @@ class Home extends Component {
                         text: 'Messages Sent'
                     }
                 },
-                series: [{
-                    data: [
-                        287, 232, 170
-                    ]
-                }]
+                series: []
             },
             optionsColumnNegative: {
                 chart: {
@@ -268,6 +257,17 @@ class Home extends Component {
         });
     }
 
+    componentWillReceiveProps(newProps) {
+        debugger
+        let optionsBar = this.state.optionsBar;
+        optionsBar.series=[{data: newProps.homeBarData}];
+        let optionsBarMultiple = this.state.optionsBarMultiple;
+        optionsBarMultiple.series= newProps.homeBarMultipleData;
+        let columnBasic = this.state.columnBasic;
+        columnBasic.series = [{data: newProps.homeColumnData}];
+        this.setState({ optionsBar: optionsBar,optionsBarMultiple:optionsBarMultiple,columnBasic:columnBasic });
+    }
+
     render() {
         if (!_.isEmpty(this.state.optionsBar)) {
             return (
@@ -320,4 +320,22 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        homeBarData: state.homeBarData,
+        homeBarMultipleData:state.homeBarMultipleData,
+        homeColumnData:state.homeColumnData,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getChartData: (chartName) => {
+            dispatch(getChartData({chartName:chartName}));
+        }
+    }
+}
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Home);

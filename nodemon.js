@@ -1,7 +1,7 @@
 //combine nodemon
 var nodemon = require('nodemon');
 nodemon({
-  script: 'dev-server.js',
+  script: 'server/dev-server.js',
   ignore: ['components/*', 'src', 'app.js'],
   ext: 'js json ejs env'
 });
