@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>React</title>
-  </head>
-  <body>
-    <div class="header"></div>
-    <div id="root"></div>
-    <script type="text/javascript" src="dist/local.js"></script>
-     <!-- jQuery -->
-    <script src="./node_modules/startbootstrap-sb-admin-2/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script type="text/javascript" src="dist/bundle.js"></script>
 
+<head>
+  <title>Maps POC</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #map {
+      height: 100%;
+    }
+  </style>
+  <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: {lat: -33.8666, lng: 151.1958}
+        });
+      }
+    </script>
+</head>
 
-  </body>
+<body>
+  <div id="map"></div>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKzGKaXgXZRBipY2QlNWMNBEmVdbTf5mU&callback=initMap">
+  </script>
+</body>
+
 </html>
