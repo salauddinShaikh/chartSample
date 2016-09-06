@@ -97,7 +97,121 @@ var chartData = {
     lineLogarithmic: [{
         data: [1, 2, 4, 8, 16, 32, 64, 128, 256, 512],
         pointStart: 1
-    }]
+    }],
+    pieSimple: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Microsoft Internet Explorer',
+            y: 56.33
+        }, {
+                name: 'Chrome',
+                y: 24.03,
+                sliced: true,
+                selected: true
+            }, {
+                name: 'Firefox',
+                y: 10.38
+            }, {
+                name: 'Safari',
+                y: 4.77
+            }, {
+                name: 'Opera',
+                y: 0.91
+            }, {
+                name: 'Proprietary or Undetectable',
+                y: 0.2
+            }]
+    }],
+    pieLegend: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Microsoft Internet Explorer',
+            y: 56.33
+        }, {
+                name: 'Chrome',
+                y: 24.03,
+                sliced: true,
+                selected: true
+            }, {
+                name: 'Firefox',
+                y: 10.38
+            }, {
+                name: 'Safari',
+                y: 4.77
+            }, {
+                name: 'Opera',
+                y: 0.91
+            }, {
+                name: 'Proprietary or Undetectable',
+                y: 0.2
+            }]
+    }],
+    pieSemiDonut: [{
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '50%',
+        data: [
+            ['Firefox', 10.38],
+            ['IE', 56.33],
+            ['Chrome', 24.03],
+            ['Safari', 4.77],
+            ['Opera', 0.91],
+            {
+                name: 'Proprietary or Undetectable',
+                y: 0.2,
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        ]
+    }],
+    pieDrillDown: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Microsoft Internet Explorer',
+            y: 56.33,
+            drilldown: 'Microsoft Internet Explorer'
+        }, {
+                name: 'Chrome',
+                y: 24.03,
+                drilldown: 'Chrome'
+            }, {
+                name: 'Firefox',
+                y: 10.38,
+                drilldown: 'Firefox'
+            }, {
+                name: 'Safari',
+                y: 4.77,
+                drilldown: 'Safari'
+            }, {
+                name: 'Opera',
+                y: 0.91,
+                drilldown: 'Opera'
+            }, {
+                name: 'Proprietary or Undetectable',
+                y: 0.2,
+                drilldown: null
+            }]
+    }],
+    pieGradient:[{
+                    name: 'Brands',
+                    data: [
+                        { name: 'Microsoft Internet Explorer', y: 56.33 },
+                        {
+                            name: 'Chrome',
+                            y: 24.03,
+                            sliced: true,
+                            selected: true
+                        },
+                        { name: 'Firefox', y: 10.38 },
+                        { name: 'Safari', y: 4.77 }, { name: 'Opera', y: 0.91 },
+                        { name: 'Proprietary or Undetectable', y: 0.2 }
+                    ]
+                }]
+
 }
 
 module.exports = chartData;

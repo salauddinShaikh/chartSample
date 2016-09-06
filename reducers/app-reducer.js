@@ -51,6 +51,26 @@ export default function AppReducer(state = initialState, action) {
                     return Object.assign([], state, {
                         lineLogarithmic: action.data
                     });
+                case "pieSimple":
+                    return Object.assign([], state, {
+                        pieSimple: action.data
+                    });
+                case "pieLegend":
+                    return Object.assign([], state, {
+                        pieLegend: action.data
+                    });
+                case "pieSemiDonut":
+                    return Object.assign([], state, {
+                        pieSemiDonut: action.data
+                    });
+                case "pieDrillDown":
+                    return Object.assign([], state, {
+                        pieDrillDown: action.data
+                    });
+                case "pieGradient":
+                    return Object.assign([], state, {
+                        pieGradient: action.data
+                    });
             }
         default:
             return state;

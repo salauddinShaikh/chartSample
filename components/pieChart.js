@@ -6,7 +6,7 @@ import Highcharts from 'highcharts';
 import Exporting from 'highcharts/modules/exporting';
 import Data from 'highcharts/modules/data';
 import Drilldown from 'highcharts/modules/drilldown';
-
+import { getChartData } from '../actions/chart-action';
 
 class PieChart extends Component {
     constructor(props) {
@@ -15,6 +15,11 @@ class PieChart extends Component {
         }
     }
     componentDidMount() {
+        this.props.getChartData("pieSimple");
+        this.props.getChartData("pieLegend");
+        this.props.getChartData("pieSemiDonut");
+        this.props.getChartData("pieDrillDown");
+        this.props.getChartData("pieGradient");
         this.setState({
             optionsPieSimple: {
                 chart: {
@@ -42,31 +47,7 @@ class PieChart extends Component {
                         }
                     }
                 },
-                series: [{
-                    name: 'Brands',
-                    colorByPoint: true,
-                    data: [{
-                        name: 'Microsoft Internet Explorer',
-                        y: 56.33
-                    }, {
-                            name: 'Chrome',
-                            y: 24.03,
-                            sliced: true,
-                            selected: true
-                        }, {
-                            name: 'Firefox',
-                            y: 10.38
-                        }, {
-                            name: 'Safari',
-                            y: 4.77
-                        }, {
-                            name: 'Opera',
-                            y: 0.91
-                        }, {
-                            name: 'Proprietary or Undetectable',
-                            y: 0.2
-                        }]
-                }]
+                series: []
             },
             optionsPieLegend: {
                 chart: {
@@ -91,31 +72,7 @@ class PieChart extends Component {
                         showInLegend: true
                     }
                 },
-                series: [{
-                    name: 'Brands',
-                    colorByPoint: true,
-                    data: [{
-                        name: 'Microsoft Internet Explorer',
-                        y: 56.33
-                    }, {
-                            name: 'Chrome',
-                            y: 24.03,
-                            sliced: true,
-                            selected: true
-                        }, {
-                            name: 'Firefox',
-                            y: 10.38
-                        }, {
-                            name: 'Safari',
-                            y: 4.77
-                        }, {
-                            name: 'Opera',
-                            y: 0.91
-                        }, {
-                            name: 'Proprietary or Undetectable',
-                            y: 0.2
-                        }]
-                }]
+                series: []
             },
             optionsPieDonut: {
                 chart: {
@@ -193,25 +150,7 @@ class PieChart extends Component {
                         center: ['50%', '75%']
                     }
                 },
-                series: [{
-                    type: 'pie',
-                    name: 'Browser share',
-                    innerSize: '50%',
-                    data: [
-                        ['Firefox', 10.38],
-                        ['IE', 56.33],
-                        ['Chrome', 24.03],
-                        ['Safari', 4.77],
-                        ['Opera', 0.91],
-                        {
-                            name: 'Proprietary or Undetectable',
-                            y: 0.2,
-                            dataLabels: {
-                                enabled: false
-                            }
-                        }
-                    ]
-                }]
+                series: []
             },
             optionsPieDrillDown: {
                 chart: {
@@ -236,35 +175,7 @@ class PieChart extends Component {
                     headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
                     pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
                 },
-                series: [{
-                    name: 'Brands',
-                    colorByPoint: true,
-                    data: [{
-                        name: 'Microsoft Internet Explorer',
-                        y: 56.33,
-                        drilldown: 'Microsoft Internet Explorer'
-                    }, {
-                            name: 'Chrome',
-                            y: 24.03,
-                            drilldown: 'Chrome'
-                        }, {
-                            name: 'Firefox',
-                            y: 10.38,
-                            drilldown: 'Firefox'
-                        }, {
-                            name: 'Safari',
-                            y: 4.77,
-                            drilldown: 'Safari'
-                        }, {
-                            name: 'Opera',
-                            y: 0.91,
-                            drilldown: 'Opera'
-                        }, {
-                            name: 'Proprietary or Undetectable',
-                            y: 0.2,
-                            drilldown: null
-                        }]
-                }],
+                series: [],
                 drilldown: {
                     series: [{
                         name: 'Microsoft Internet Explorer',
@@ -360,30 +271,32 @@ class PieChart extends Component {
                         }
                     }
                 },
-                series: [{
-                    name: 'Brands',
-                    data: [
-                        { name: 'Microsoft Internet Explorer', y: 56.33 },
-                        {
-                            name: 'Chrome',
-                            y: 24.03,
-                            sliced: true,
-                            selected: true
-                        },
-                        { name: 'Firefox', y: 10.38 },
-                        { name: 'Safari', y: 4.77 }, { name: 'Opera', y: 0.91 },
-                        { name: 'Proprietary or Undetectable', y: 0.2 }
-                    ]
-                }]
+                series: []
             }
         });
     }
 
+  componentWillReceiveProps(newProps) {
+        let optionsPieSimple = this.state.optionsPieSimple;
+        optionsPieSimple.series = newProps.pieSimple;
+        let optionsPieLegend = this.state.optionsPieLegend;
+        optionsPieLegend.series = newProps.pieLegend;
+        let optionsPieDrillDown = this.state.optionsPieDrillDown;
+        optionsPieDrillDown.series = newProps.pieDrillDown;
+        let optionsPieSemiDonut = this.state.optionsPieSemiDonut;
+        optionsPieSemiDonut.series = newProps.pieSemiDonut;
+        let optionsPieGradient = this.state.optionsPieGradient;
+        optionsPieGradient.series = newProps.pieGradient;
+        this.setState({
+            optionsPieSimple: optionsPieSimple, optionsPieLegend: optionsPieLegend,
+            optionsPieDrillDown: optionsPieDrillDown, optionsPieSemiDonut: optionsPieSemiDonut, optionsPieGradient: optionsPieGradient
+        });
+    }
     render() {
         if (!_.isEmpty(this.state.optionsPieSimple)) {
             return (
                 <div>
-                   <div className="row">
+                    <div className="row">
                         <div className="col-lg-12">
                             <h1 className="page-header">Pie Chart</h1>
                         </div>
@@ -425,7 +338,27 @@ class PieChart extends Component {
     }
 }
 
-export default PieChart;
+const mapStateToProps = (state) => {
+    return {
+        pieSimple: state.pieSimple,
+        pieLegend: state.pieLegend,
+        pieSemiDonut: state.pieSemiDonut,
+        pieDrillDown: state.pieDrillDown,
+        pieGradient: state.pieGradient,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getChartData: (chartName) => {
+            dispatch(getChartData({ chartName: chartName }));
+        }
+    }
+}
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(PieChart);
 
 var colors = Highcharts.getOptions().colors,
     categories = ['MSIE', 'Firefox', 'Chrome', 'Safari', 'Opera'],
@@ -518,15 +451,15 @@ for (i = 0; i < dataLen; i += 1) {
 }
 
 Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
-        return {
-            radialGradient: {
-                cx: 0.5,
-                cy: 0.3,
-                r: 0.7
-            },
-            stops: [
-                [0, color],
-                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-            ]
-        };
-    });
+    return {
+        radialGradient: {
+            cx: 0.5,
+            cy: 0.3,
+            r: 0.7
+        },
+        stops: [
+            [0, color],
+            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+        ]
+    };
+});
