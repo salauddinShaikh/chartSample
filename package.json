@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run clear-dist && webpack",
     "build-prod": "webpack --config webpack.config.prod.js",
-    "clear-dist": "rm -Rf dist/",
+    "clear-dist": "",
     "start": "node nodemon.js",
     "test": "mocha --reporter spec testSetup.js components/tests/*.test.js "
   },
