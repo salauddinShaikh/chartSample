@@ -3,7 +3,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clear-dist && webpack",
+    "build": "webpack",
     "build-prod": "webpack --config webpack.config.prod.js",
     "clear-dist": "",
     "start": "node nodemon.js",
