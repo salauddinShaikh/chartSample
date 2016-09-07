@@ -47,14 +47,37 @@
       padding-top: 8px;
     }
     
-    .form-control {
+    .from-location-input {
+      margin-left: 25px;
       display: inline;
-      width: 75%;
+      width: 82%;
+      margin-top: 5px;
+    }
+    
+    .to-location-input {
+      margin-left: 43px;
+      display: inline;
+      width: 82%;
       margin-top: 5px;
     }
     
     .latlong-input {
+      display: inline;
+      margin-top: 5px;
       width: 33%;
+    }
+    
+    .grid-input {
+      display: inline;
+      width: 50%;
+    }
+    
+    #btnGetRegion {
+      margin-left: 20%;
+    }
+    
+    #btnMapTrip {
+      margin-left: 71px;
     }
   </style>
   <script>
@@ -80,7 +103,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-        <a class="navbar-brand" href="#">Mapping POC-</a>
+        <a class="navbar-brand" href="#">Mapping POC -</a>
         <a class="navbar-brand" href="#">User = User1</a>
         <a class="navbar-brand" href="#" id="locationRef">Location=19.20,17.222</a>
       </div>
@@ -106,14 +129,24 @@
           Selected Pin :
         </div>
       </div>
-      <div id="singleTrip"  style="display: none;">
-        From Location: <input type="text" class="form-control" id="fromLocation" placeholder="">
-        <br/> To Location: <input type="text" class="form-control" id="toLocation" placeholder="">
+      <div id="singleTrip" style="display: none;">
+        From Location: <input type="text" class="form-control from-location-input" id="fromLocation" placeholder="">
+        <br/> To Location: <input type="text" class="form-control to-location-input" id="toLocation" placeholder="">
         <br/> Or: From Lat/Long: <input type="text" class="form-control latlong-input" id="fromLatLong" placeholder=""> To:
         <input type="text" class="form-control latlong-input" id="toLatLong" placeholder="">
         <button type="button" class="btn btn-default" id="btnMapTrip">Map Trip</button>
         <br/>
-        <p id="singleTripTime"  style="display: none;"> Expected Trip Time = </p>
+        <p id="singleTripTime" style="display: none;"> Expected Trip Time = </p>
+      </div>
+      <div class="row" id="grid" style="display: none;">
+        From Location: <input type="text" class="form-control grid-input " id="gridLocation" placeholder="">
+        <button type="button" class="btn btn-default" id="btnGetRegion">Get Region</button>
+        <br/> Region = R2
+        <br/><br/>
+        <div class="col-md-12">
+          <button type="button" class="btn btn-success" id="btnSaveGrid">Save Grid</button>
+          <button type="button" class="btn btn-danger" id="btnCancelGrid">Cancel</button>
+        </div>
       </div>
       <br/>
       <div class="row">
@@ -185,21 +218,7 @@
       getLocation();
     }, 5000);
 
-    var noSleep = new NoSleep();
-
-    var wakeLockEnabled = false;
-    var toggleEl = document.querySelector("#toggle");
-    toggleEl.addEventListener('click', function() {
-      if (!wakeLockEnabled) {
-        noSleep.enable(); // keep the screen on!
-        wakeLockEnabled = true;
-        toggleEl.value = "Status:  Keep Screen On";
-      } else {
-        noSleep.disable(); // let the screen turn off.
-        wakeLockEnabled = false;
-        toggleEl.value = "Status:  Allow Sleep";
-      }
-    }, false);
+   
 
     $( document ).ready(function() {
      $(window).resize(function () {
@@ -210,20 +229,36 @@
       $("#btnMapPlotting").click(function(event){
           $('#mapPlottingPin').show();
           $('#singleTrip').hide();
+          $('#singleTripTime').hide();
+          $('#grid').hide();
       });
       $("#btnSingleTrip").click(function(event){
           $('#singleTrip').show();
           $('#mapPlottingPin').hide();
           $('#singleTripTime').hide();
+          $('#grid').hide();
       });
       $("#btnGrid").click(function(event){
-          alert('clicked');
+        $('#grid').show();
+        $('#singleTrip').hide();
+        $('#mapPlottingPin').hide();
       });
       $("#btnMapTrip").click(function(event){
          $('#singleTripTime').show();
       });
-
+      $("#btnGetRegion").click(function(event){
+         alert('Get region click');
+      });
+      $("#btnSaveGrid").click(function(event){
+         alert('Save grid click');
+      });
+       $("#btnCancelGrid").click(function(event){
+         alert('Cancel grid click');
+      });
     });
+
+    var noSleep = new NoSleep();
+    noSleep.enable();
    </script>
 </body>
 
