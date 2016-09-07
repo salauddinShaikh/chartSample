@@ -27,24 +27,24 @@
       height: 100%;
       margin: 0;
       padding: 0;
-    }
-    
-    #map {
-      height: 100%;
     }*/
+    
+    #mapPlotting {
+      height: 100%;
+    }
   </style>
   <script>
       function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
+        var map = new google.maps.Map(document.getElementById('mapPlotting'), {
           zoom: 17,
-          center: {lat: -33.8666, lng: 151.1958}
+          center: {lat: 18.5536161, lng: 73.807119399}
         });
       }
     </script>
 </head>
 
 <body>
-  <!-- Fixed navbar -->
+  <div id="mapPlotting"></div>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -65,41 +65,32 @@
           <li><a href="#"><button type="button">Single Trip</button></a></li>
           <li><a href="#"><button type="button">Grid</button></a></li>
           <li><a href="#"><button type="button">Logout</button></a></li>
+          <li><a href="#"><input type="button" id="toggle" value="Status:  Allow Sleep" /></a></li>
         </ul>
       </div>
-      <!--/.nav-collapse -->
     </div>
   </nav>
 
-  <!--<div id="map"></div>-->
   <div class="container theme-showcase" role="main">
     <div class="container" style="margin-top:70px;">
       <div class="row">
         <div class="col-md-12">
-          <input type="button" id="toggle" value="Status:  Allow Sleep" />
+          Hello
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
           <div id="logsDiv">
-            <p id="p1">This is a paragraph.</p>
           </div>
         </div>
       </div>
-      <hr>
-    </div>
-  </div>
-
-  <div class="container">
-    <!-- Main component for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div id="map"></div>
     </div>
   </div>
   <!-- /container -->
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKzGKaXgXZRBipY2QlNWMNBEmVdbTf5mU&callback=initMap">
   </script>
 
@@ -107,7 +98,6 @@
 
     function setLogMessage(message){
       var para = document.createElement("p");
-
       document.getElementById('locationRef').innerHTML = message;
       var date = new Date();
       var timeMessage = date.getHours()+':' + date.getMinutes()+':' + date.getSeconds() 
@@ -115,7 +105,7 @@
       para.appendChild(node);
 
       var element = document.getElementById("logsDiv");
-      element.appendChild(para);
+      //element.appendChild(para);
     }
 
     function getLocation() {
