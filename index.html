@@ -127,13 +127,34 @@
         </div>
       </div>
       <div id="singleTrip" style="display: none;">
-        From Location: <input type="text" class="form-control from-location-input" id="fromLocation" placeholder="">
-        <br/> To Location: <input type="text" class="form-control to-location-input" id="toLocation" placeholder="">
-        <br/> Or: From Lat/Long: <input type="text" class="form-control latlong-input" id="fromLatLong" placeholder=""> To:
-        <input type="text" class="form-control latlong-input" id="toLatLong" placeholder="">
-        <button type="button" class="btn btn-success" id="btnMapTrip">Map Trip</button>
-        <br/>
-        <p id="singleTripTime" style="display: none;"> Expected Trip Time = </p>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <div class="control-label col-sm-2">From Location:</div>
+            <div class="col-sm-10">
+              <input type="text" class="form-control " id="fromLocation" placeholder="">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="control-label col-sm-2">To Location:</div>
+            <div class="col-sm-10">
+              <input type="text" class="form-control " id="toLocation" placeholder="">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="control-label col-sm-2">Or: From Lat/Long:</div>
+            <div class="col-sm-3">
+              <input type="text" class="form-control " id="fromLatLong" placeholder="">
+            </div>
+            <div class="control-label col-sm-1">To:</div>
+            <div class="col-sm-3">
+              <input type="text" class="form-control " id="toLatLong" placeholder="">
+            </div>
+            <button type="button" class="btn btn-success  col-sm-1" id="btnMapTrip">Map Trip</button>
+          </div>
+           <div class="form-group">
+             <div class="control-label col-sm-2" id="singleTripTime" style="display: none;"> Expected Trip Time = </div>
+           </div>
+        </form>
       </div>
       <div class="row" id="grid" style="display: none;">
         From Location: <input type="text" class="form-control grid-input " id="gridLocation" placeholder="">
@@ -165,7 +186,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          <h4 class="modal-title" id="myModalLabel">Save Grid</h4>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -189,7 +210,6 @@
       crossorigin="anonymous"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKzGKaXgXZRBipY2QlNWMNBEmVdbTf5mU&callback=initMap">
   </script>
-
     <script>
     
     function setLogMessage(message){
