@@ -22,14 +22,40 @@
     <![endif]-->
   <script src="NoSleep.js"></script>
   <style>
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #mapPlotting {
-        height: 100%;
-      }
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #mapPlotting {
+      height: 100%;
+    }
+    
+    .navbar-brand {
+      font-size: 15px;
+    }
+    
+    .btn-links {
+      color: #04b2ff;
+      background-color: #fff;
+      border: solid 2px #04b2ff;
+    }
+    
+    .navbar-header {
+      padding-top: 8px;
+    }
+    
+    .form-control {
+      display: inline;
+      width: 75%;
+      margin-top: 5px;
+    }
+    
+    .latlong-input {
+      width: 33%;
+    }
   </style>
   <script>
       function initMap() {
@@ -38,12 +64,13 @@
           center: {lat: 18.5536161, lng: 73.807119399}
         });
       }
+     
     </script>
 </head>
 
 <body>
-  <div id="mapPlotting"></div>
-    <nav class="navbar navbar-default navbar-fixed-top">
+
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
@@ -53,27 +80,45 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-        <a class="navbar-brand" href="#">Mapping POC -</a>
+        <a class="navbar-brand" href="#">Mapping POC-</a>
         <a class="navbar-brand" href="#">User = User1</a>
         <a class="navbar-brand" href="#" id="locationRef">Location=19.20,17.222</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><button type="button">Map Plotting</button></a></li>
-          <li><a href="#"><button type="button">Single Trip</button></a></li>
-          <li><a href="#"><button type="button">Grid</button></a></li>
-          <li><a href="#"><button type="button">Logout</button></a></li>
-          <li><a href="#"><input type="button" id="toggle" value="Status:  Allow Sleep" /></a></li>
+          <li>
+            <a href="#"><input type="button" id="toggle" value="Status:  Allow Sleep" /></a>
+          </li>
+          <li><a href="#"><button type="button" id="btnMapPlotting" class="btn  btn-links">Map Plotting</button></a></li>
+          <li><a href="#"><button type="button" id="btnSingleTrip"  class="btn  btn-links">Single Trip</button></a></li>
+          <li><a href="#"><button type="button" id="btnGrid" class="btn  btn-links">Grid</button></a></li>
+          <li><a href="#"><button type="button" id="btnLogout" class="btn  btn-links">Logout</button></a></li>
         </ul>
       </div>
+
     </div>
   </nav>
-    
-    <div class="container theme-showcase" role="main">
-    <div class="container" style="margin-top:70px;">
+
+  <div class="container theme-showcase" role="main">
+    <div class="container" style="margin-top:105px;">
+      <div class="row" id="mapPlottingPin" style="display: none;">
+        <div class="col-md-12">
+          Selected Pin :
+        </div>
+      </div>
+      <div id="singleTrip"  style="display: none;">
+        From Location: <input type="text" class="form-control" id="fromLocation" placeholder="">
+        <br/> To Location: <input type="text" class="form-control" id="toLocation" placeholder="">
+        <br/> Or: From Lat/Long: <input type="text" class="form-control latlong-input" id="fromLatLong" placeholder=""> To:
+        <input type="text" class="form-control latlong-input" id="toLatLong" placeholder="">
+        <button type="button" class="btn btn-default" id="btnMapTrip">Map Trip</button>
+        <br/>
+        <p id="singleTripTime"  style="display: none;"> Expected Trip Time = </p>
+      </div>
+      <br/>
       <div class="row">
         <div class="col-md-12">
-          Hello
+          <div id="mapPlotting"></div>
         </div>
       </div>
       <div class="row">
@@ -84,7 +129,7 @@
       </div>
     </div>
   </div>
-    <!-- /container -->
+  <!-- /container -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -140,7 +185,7 @@
       getLocation();
     }, 5000);
 
-var noSleep = new NoSleep();
+    var noSleep = new NoSleep();
 
     var wakeLockEnabled = false;
     var toggleEl = document.querySelector("#toggle");
@@ -155,6 +200,30 @@ var noSleep = new NoSleep();
         toggleEl.value = "Status:  Allow Sleep";
       }
     }, false);
+
+    $( document ).ready(function() {
+     $(window).resize(function () {
+        var h = $(window).height(),
+        offsetTop = 60; // Calculate the top offset
+        $('#mapPlotting').css('height', (h - offsetTop));
+      }).resize();
+      $("#btnMapPlotting").click(function(event){
+          $('#mapPlottingPin').show();
+          $('#singleTrip').hide();
+      });
+      $("#btnSingleTrip").click(function(event){
+          $('#singleTrip').show();
+          $('#mapPlottingPin').hide();
+          $('#singleTripTime').hide();
+      });
+      $("#btnGrid").click(function(event){
+          alert('clicked');
+      });
+      $("#btnMapTrip").click(function(event){
+         $('#singleTripTime').show();
+      });
+
+    });
    </script>
 </body>
 
