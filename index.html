@@ -44,7 +44,8 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
@@ -54,20 +55,19 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-        <a class="navbar-brand" href="#">Mapping POC - User = User1</a>
+        <a class="navbar-brand" href="#">Mapping POC -</a>
+        <a class="navbar-brand" href="#">User = User1</a>
+        <a class="navbar-brand" href="#" id="locationRef">Location=19.20,17.222</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <form class="navbar-form navbar-right">
-          <div class="form-group">
-            <input type="text" placeholder="Email" class="form-control">
-          </div>
-          <div class="form-group">
-            <input type="password" placeholder="Password" class="form-control">
-          </div>
-          <button type="submit" class="btn btn-success">Sign in</button>
-        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><button type="button">Map Plotting</button></a></li>
+          <li><a href="#"><button type="button">Single Trip</button></a></li>
+          <li><a href="#"><button type="button">Grid</button></a></li>
+          <li><a href="#"><button type="button">Logout</button></a></li>
+        </ul>
       </div>
-      <!--/.navbar-collapse -->
+      <!--/.nav-collapse -->
     </div>
   </nav>
 
@@ -85,6 +85,15 @@
       <hr>
     </div>
   </div>
+
+  <div class="container">
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div id="map"></div>
+    </div>
+  </div>
+  <!-- /container -->
+
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -98,6 +107,8 @@
 
     function setLogMessage(message){
       var para = document.createElement("p");
+
+      document.getElementById('locationRef').innerHTML = message;
       var date = new Date();
       var timeMessage = date.getHours()+':' + date.getMinutes()+':' + date.getSeconds() 
       var node = document.createTextNode(timeMessage +','+ message);
@@ -116,8 +127,7 @@
     }
 
     function showPosition(position) {
-        var message = " " + position.coords.latitude +
-        ", " + position.coords.longitude;
+        var message = "Location="+position.coords.latitude+"," + position.coords.longitude;
         setLogMessage(message);
     }
 
