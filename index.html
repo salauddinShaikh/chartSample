@@ -112,7 +112,7 @@
           <li><a href="#"><button type="button" id="btnMapPlotting" class="btn  btn-links">Map Plotting</button></a></li>
           <li><a href="#"><button type="button" id="btnSingleTrip"  class="btn  btn-links">Single Trip</button></a></li>
           <li><a href="#"><button type="button" id="btnGrid" class="btn  btn-links">Grid</button></a></li>
-          <li><a href="#"><button type="button" id="btnLogout" class="btn  btn-links">Logout</button></a></li>
+          <li><a href="logoff.aspx"><button type="button" id="btnLogout" class="btn  btn-links">Logout</button></a></li>
         </ul>
       </div>
 
@@ -236,11 +236,11 @@
         var message = "Location="+position.coords.latitude+"," + position.coords.longitude;
         var data = {'latitude':position.coords.latitude,'longitude':position.coords.longitude};
         $.ajax({
-          url: 'MappingPOC/MappingPOCServices.asmx/SaveUserCurrentLocation',
-          type: 'POST',
-          contentType:'application/json',
-          data: JSON.stringify(data),
-          dataType:'json'
+            url: 'MappingPOCServices.asmx/SaveUserCurrentLocation',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ location: data }),
+            dataType: 'json'
         });
         setLogMessage(message);
     }
@@ -295,13 +295,19 @@
          $('#singleTripTime').show();
       });
       $("#btnGetRegion").click(function(event){
-          //url: 'MappingPOC/MappingPOCServices.asmx/GetUserLocation',
-           $.getJSON('/api/mapPlotting', function(response) {
+           $.getJSON('MappingPOCServices.asmx/GetUserRegions', function(response) {
               console.log('Data=',response);
             });
       });
       $("#btnSaveGrid").click(function(event){
-        // alert('Save grid click');
+        var data = {};
+        $.ajax({
+            url: 'MappingPOCServices.asmx/SaveUserRegion',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ location: data }),
+            dataType: 'json'
+        });
       });
        $("#btnCancelGrid").click(function(event){
          alert('Cancel grid click');
