@@ -11,6 +11,7 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(express.static(__dirname + '../'));
 app.use('/dist', express.static(__dirname + '/../dist'));
+app.use('/js', express.static(__dirname + '/../js'));
 app.use('/node_modules', express.static(__dirname + '/../node_modules'));
 app.set('views', path.join(__dirname, '../'));
 app.set('view engine', 'ejs');
@@ -23,7 +24,7 @@ app.post('/api/data', function(req, res) {
   res.send({data:chartData[req.body.chartName]});
 });
 
-app.get('/*', function(req, res) {
+app.get('/', function(req, res) {
   res.render('index.html');
 });
 
