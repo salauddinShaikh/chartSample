@@ -1,0 +1,57 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#mapPlotting {
+    height: 100%;
+}
+
+.navbar-brand {
+    font-size: 15px;
+}
+
+.btn-links {
+    color: #04b2ff;
+    background-color: #fff;
+    border: solid 2px #04b2ff;
+}
+
+.navbar-header {
+    padding-top: 8px;
+}
+
+.from-location-input {
+    margin-left: 25px;
+    display: inline;
+    width: 82%;
+    margin-top: 5px;
+}
+
+.to-location-input {
+    margin-left: 43px;
+    display: inline;
+    width: 82%;
+    margin-top: 5px;
+}
+
+.latlong-input {
+    display: inline;
+    margin-top: 5px;
+    width: 33%;
+}
+
+.grid-input {
+    display: inline;
+    width: 50%;
+}
+
+#btnGetRegion {
+    margin-left: 20%;
+}
+
+#btnMapTrip {
+    margin-left: 71px;
+}
