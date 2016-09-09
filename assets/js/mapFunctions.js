@@ -1,20 +1,21 @@
+var map;
 function initMap(mapType) {
-    alert('initimap');
+    //alert('initimap');
     console.log(mapType)
     if (mapType == "plot") {
-        var map = new google.maps.Map(document.getElementById('mapPlotting'), {
+        map = new google.maps.Map(document.getElementById('mapPlotting'), {
             zoom: 6,
             center: { lat: -33.9, lng: 151.2 }
         });
         getMarkers(map);
     } else if (mapType == "trip") {
-        var map = new google.maps.Map(document.getElementById('mapPlotting'), {
+        map = new google.maps.Map(document.getElementById('mapPlotting'), {
             zoom: 6,
             center: { lat: -33.9, lng: 151.2 }
         });
-        setDirections(map);
+        //setDirections(map);
     } else if (mapType == "grid") {
-        var map = new google.maps.Map(document.getElementById('mapPlotting'), {
+        map = new google.maps.Map(document.getElementById('mapPlotting'), {
             zoom: 6,
             center: { lat: -33.9, lng: 151.2 }
         });
@@ -29,11 +30,7 @@ function setDirections(map) {
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var service = new google.maps.DistanceMatrixService;
     directionsDisplay.setMap(map);
-
-    var onChangeHandler = function () {
-        calculateAndDisplayRoute(service, directionsService, directionsDisplay);
-    };
-    document.getElementById('btnMapTrip').addEventListener('click', onChangeHandler);
+    calculateAndDisplayRoute(service, directionsService, directionsDisplay);
 }
 
 function calculateAndDisplayRoute(service, directionsService, directionsDisplay) {
@@ -45,6 +42,7 @@ function calculateAndDisplayRoute(service, directionsService, directionsDisplay)
     var dest = ""
     if (frm == "" && to == "" && latfrm == "" && latto == "") {
         alert("Please Enter Locations");
+        $('#singleTripTime').hide();
         return false;
     } else if (frm != "" && to != "") {
         origin = frm;
@@ -66,7 +64,8 @@ function calculateAndDisplayRoute(service, directionsService, directionsDisplay)
             console.log(response);
         } else {
             window.alert('Directions request failed due to ' + status);
-            initMap(trip)
+            $(singleTripTime).html("");
+            initMap('trip');
         }
     });
     service.getDistanceMatrix({
@@ -77,8 +76,10 @@ function calculateAndDisplayRoute(service, directionsService, directionsDisplay)
         avoidHighways: false,
         avoidTolls: false
     }, function (response, status) {
-        if (status !== 'OK') {
-            alert('Error was: ' + status);
+        if (status !== 'OK' || response.rows[0].elements[0].status !== 'OK') {
+            //alert('Error was: ' + response.rows[0].elements[0].status);
+            $(singleTripTime).html("");
+            initMap('trip');
         } else {
             console.log(response);
             var distance = response.rows[0].elements[0].distance.text;
@@ -186,19 +187,23 @@ function grid(map) {
     google.maps.event.addListener(drawingManager, 'overlaycomplete', function (e) {
         var a = e.overlay.getPaths().getArray()[0].getArray();
         var r = prompt("Enter The Region Name", "Region 1");
-        console.log(r);
         geo = [];
-        if (r != null || r.trim() != "") {
-            for (i = 0; i < a.length; i++) {
-                console.log(a[i].lat(), a[i].lng());
-                geo.push({ "lat": a[i].lat(), "lng": a[i].lng() });
+        if (r != null) {
+            if (r.trim() != "") {
+                console.log("true");
+                for (i = 0; i < a.length; i++) {
+                    console.log(a[i].lat(), a[i].lng());
+                    geo.push({ "lat": a[i].lat(), "lng": a[i].lng() });
+                }
+                debugger
+                regions.RegionName = r;
+                regions.LocationInfo = JSON.stringify(geo);
+                setPolygon(regions);
             }
-            regions.RegionName = r;
-            regions.LocationInfo = JSON.stringify(geo);
-            setPolygon(regions);
-
+        } else if (r == null) {
+            initMap("grid");
         } else {
-            initMap();
+            initMap("grid");
         }
     });
 
@@ -257,36 +262,37 @@ function setPolygon(data) {
 }
 
 function getLoc(loc, map) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            if (this.responseText.status = "OK") {
-                data = JSON.parse(this.responseText);
-                if (data.results.length) {
-                    location_user = data.results[0].geometry.bounds.northeast;
-                    map.setCenter(location_user);
-                    var marker = new google.maps.Marker({
-                        position: location_user,
-                        map: map
-                    });
-                    console.log(marker);
-                    checkReigon(location_user, map)
-                } else {
-                    initMap('grid');
-                }
+    var data = "";
+    $.ajax({
+        url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + loc,
+        type: 'GET',
+        dataType: "json",
+        async: false
+    }).done(function (dataResponse) {
+        if (dataResponse.status = "OK") {
+            if (dataResponse.results.length) {
+                location_user = dataResponse.results[0].geometry.bounds.northeast;
+                map.setCenter(location_user);
+                var marker = new google.maps.Marker({
+                    position: location_user,
+                    map: map
+                });
+                checkReigon(location_user, map)
+            } else {
+                alert("No location Found");
+                initMap('grid');
             }
-
         } else {
+            alert("Something Went Wrong");
             initMap('grid');
-        }
-    };
-    xhttp.open("GET", "https://maps.googleapis.com/maps/api/geocode/json?address=" + loc, true);
-    xhttp.send();
+        };
+    })
+
 }
 
 function checkReigon(location_user, map) {
     var curPosition = new google.maps.LatLng(location_user.lat, location_user.lng);
-    var data;
+    var data = "";
     $.ajax({
         url: 'MappingPOCServices.asmx/GetUserRegions',
         type: 'POST',
@@ -312,6 +318,7 @@ function checkReigon(location_user, map) {
             }
         }
     }
+
 }
 
 function setLogMessage(message) {

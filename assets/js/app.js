@@ -8,11 +8,11 @@ function initializeApp() {
         $('#mapPlotting').css('height', (h - offsetTop));
     }).resize();
     $("#btnMapPlotting").click(function (event) {
-        initMap("plot");
         $('#mapPlottingPin').show();
         $('#singleTrip').hide();
         $('#singleTripTime').hide();
         $('#grid').hide();
+        initMap("plot");
     });
     $("#btnSingleTrip").click(function (event) {
         initMap("trip");
@@ -29,12 +29,21 @@ function initializeApp() {
     });
     $("#btnMapTrip").click(function (event) {
         $('#singleTripTime').show();
+        setDirections(map);
     });
-    $("#btnGetRegion").click(function (event) {
-        $.getJSON('MappingPOCServices.asmx/GetUserRegions', function (response) {
-            console.log('Data=', response);
-        });
+     $("#btnResetTrip").click(function (event) {
+        $('#singleTripTime').hide();
+        document.getElementById('fromLocation').value="";
+        document.getElementById('toLocation').value="";
+        document.getElementById('fromLatLong').value="";
+        document.getElementById('toLatLong').value="";
+        initMap("trip"); 
     });
+    //$("#btnGetRegion").click(function (event) {
+    //    $.getJSON('MappingPOCServices.asmx/GetUserRegions', function (response) {
+    //        console.log('Data=', response);
+    //    });
+    //});
     //$("#btnSaveGrid").click(function (event) {
     //    var data = {};
     //    $.ajax({

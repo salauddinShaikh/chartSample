@@ -53,5 +53,8 @@ body {
 }
 
 #btnMapTrip {
-    margin-left: 71px;
+    margin-left: 26px;
+}
+#btnResetTrip {
+    margin-left: 37px;
 }
