@@ -1,24 +1,30 @@
 var map;
 function initMap(mapType) {
-    //alert('initimap');
-    console.log(mapType)
+    //alert('initimap'); 
+    //geting currrent position for all map
+    
+    
+    //console.log(mapType)
     if (mapType == "plot") {
         map = new google.maps.Map(document.getElementById('mapPlotting'), {
-            zoom: 6,
+            zoom: 15,
             center: { lat: -33.9, lng: 151.2 }
         });
+        setCurrentPosition(map);
         getMarkers(map);
     } else if (mapType == "trip") {
         map = new google.maps.Map(document.getElementById('mapPlotting'), {
-            zoom: 6,
+            zoom: 15,
             center: { lat: -33.9, lng: 151.2 }
         });
+        setCurrentPosition(map);
         //setDirections(map);
     } else if (mapType == "grid") {
         map = new google.maps.Map(document.getElementById('mapPlotting'), {
-            zoom: 6,
-            center: { lat: -33.9, lng: 151.2 }
+            zoom: 15,
+            center: { lat: -33.9, lng: 151.2 },
         });
+        setCurrentPosition(map);
         getPolygon(map);
         grid(map);
     }
@@ -42,7 +48,7 @@ function calculateAndDisplayRoute(service, directionsService, directionsDisplay)
     var dest = ""
     if (frm == "" && to == "" && latfrm == "" && latto == "") {
         alert("Please Enter Locations");
-        $('#singleTripTime').hide();
+        $('#singleTripTime').html("");
         return false;
     } else if (frm != "" && to != "") {
         origin = frm;
@@ -61,7 +67,7 @@ function calculateAndDisplayRoute(service, directionsService, directionsDisplay)
     }, function (response, status) {
         if (status === 'OK') {
             directionsDisplay.setDirections(response);
-            console.log(response);
+            //console.log(response);
         } else {
             window.alert('Directions request failed due to ' + status);
             $(singleTripTime).html("");
@@ -81,7 +87,7 @@ function calculateAndDisplayRoute(service, directionsService, directionsDisplay)
             $(singleTripTime).html("");
             initMap('trip');
         } else {
-            console.log(response);
+            //console.log(response);
             var distance = response.rows[0].elements[0].distance.text;
             var time = response.rows[0].elements[0].duration.text;
             $(singleTripTime).html("Expected Trip Time:" + distance + " : " + time)
@@ -93,7 +99,7 @@ function calculateAndDisplayRoute(service, directionsService, directionsDisplay)
 
 function setMarkers(map, locas) {
 
-    map.setCenter({ lat: locas[0][3], lng: locas[0][4] });
+    //map.setCenter({ lat: locas[0][3], lng: locas[0][4] });
     var shape = {
         coords: [1, 1, 1, 20, 18, 20, 18, 1],
         type: 'poly'
@@ -153,7 +159,7 @@ function getMarkers(map) {
     });
     //var data = [{"UserID":"8b2001a0-9a10-e611-80c5-00155d5a0823","UserName":"User2","UserIcon":"Icon2","PinLine1":"User 2 Ln1","PinLine2":"Usr2 Ln 2","PinURL":"Usr2 Ln 2","Latitude":"43.6773135","Longitude":"-79.7189257","Mappedon":"2016-08-22T09:32:00"},{"UserID":"8b2001a0-9a10-e611-80c5-00155d5a0824","UserName":"User3","UserIcon":"Icon3","PinLine1":"Usr3 Ln1","PinLine2":"Usr 3 Ln2","PinURL":"Usr 3 Ln2","Latitude":"43.6773175","Longitude":"-79.7189277","Mappedon":"2016-08-22T09:42:00"},{"UserID":"8b2001a0-9a10-e611-80c5-00155d5a0822","UserName":"User1","UserIcon":"Icon1","PinLine1":"Pin Line 1","PinLine2":"PinLine 2","PinURL":"PinLine 2","Latitude":"51.503252","Longitude":"-0.127899","Mappedon":"2016-09-07T17:27:31.77"}]
     breaches = [];
-    console.log(data);
+    //console.log(data);
     for (i = 0; i < data.length; i++) {
         breaches.push([data[i].PinLine1, data[i].PinLine2, data[i].PinURL, parseFloat(data[i].Latitude), parseFloat(data[i].Longitude), i, data[i].UserIcon])
     }
@@ -190,9 +196,9 @@ function grid(map) {
         geo = [];
         if (r != null) {
             if (r.trim() != "") {
-                console.log("true");
+                //console.log("true");
                 for (i = 0; i < a.length; i++) {
-                    console.log(a[i].lat(), a[i].lng());
+                    //console.log(a[i].lat(), a[i].lng());
                     geo.push({ "lat": a[i].lat(), "lng": a[i].lng() });
                 }
                 debugger
@@ -226,10 +232,10 @@ function getPolygon(map) {
 }
 
 function showPolygon(map, data) {
-    console.log(data);
+    //console.log(data);
     if (data.length) {
-        var center = JSON.parse(data[0].LocationInfo);
-        map.setCenter(center[0]);
+        //var center = JSON.parse(data[0].LocationInfo);
+        //map.setCenter(center[0]);
         for (i = 0; i < data.length; i++) {
             var path = JSON.parse(data[i].LocationInfo);
             var AVpoly = new google.maps.Polygon({
@@ -369,4 +375,17 @@ function showError(error) {
             setLogMessage("An unknown error occurred.")
             break;
     }
+}
+
+function setCurrentPosition(map) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            map.setCenter(pos);
+        });
+    }
+    
 }
