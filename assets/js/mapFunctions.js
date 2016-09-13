@@ -1,4 +1,5 @@
 var map;
+var existingRegions = [];
 function initMap(mapType) {
     //geting currrent position for all map
     if (mapType == "plot") {
@@ -58,10 +59,20 @@ function calculateAndDisplayRoute(service, directionsService, directionsDisplay)
     directionsService.route({
         origin: origin,
         destination: dest,
+        provideRouteAlternatives: true,
         travelMode: 'DRIVING'
     }, function (response, status) {
         if (status === 'OK') {
-            directionsDisplay.setDirections(response);
+            for (var i = 0; i < response.routes.length; i++) {               
+                new google.maps.DirectionsRenderer({
+                    map: map,
+                    directions: response,
+                    routeIndex: i,
+                    polylineOptions: {
+                        strokeColor: "blue"
+                    }
+                })
+            }
         } else {
             window.alert('Directions request failed due to ' + status);
             $(singleTripTime).html("");
@@ -179,24 +190,40 @@ function grid(map) {
     drawingManager.setMap(map);
     google.maps.event.addListener(drawingManager, 'overlaycomplete', function (e) {
         var a = e.overlay.getPaths().getArray()[0].getArray();
-        var r = prompt("Enter The Region Name", "Region 1");
-        geo = [];
-        if (r != null) {
-            if (r.trim() != "") {
+        checkExists(a);
+    });
+}
+function checkExists(a) {
+    var r = prompt("Enter The Region Name", "Region 1");
+    var isExist = false;
+    geo = [];
+    if (r != null) {
+        if (r.trim() != "") {
+            var isExist = false;
+            for (var count = 0; count < existingRegions.length ; count++) {
+                if (existingRegions[count].RegionName.toLowerCase() === r.toLowerCase()) {
+                    alert("Region Name is already exists.")
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist) {
                 for (i = 0; i < a.length; i++) {
                     geo.push({ "lat": a[i].lat(), "lng": a[i].lng() });
                 }
                 regions.RegionName = r;
                 regions.LocationInfo = JSON.stringify(geo);
                 setPolygon(regions);
-            }
-        } else if (r == null) {
-            initMap("grid");
-        } else {
-            initMap("grid");
-        }
-    });
 
+            } else {
+                checkExists(a);
+            }
+        }
+    } else if (r == null) {
+        initMap("grid");
+    } else {
+        initMap("grid");
+    }
 }
 
 function getPolygon(map) {
@@ -210,8 +237,8 @@ function getPolygon(map) {
         async: false
     }).done(function (dataResponse) {
         parse_data = $(dataResponse).find("string").text();
-        data = JSON.parse(parse_data);
-        showPolygon(map, data);
+        existingRegions = JSON.parse(parse_data);
+        showPolygon(map, existingRegions);
     });
 }
 
