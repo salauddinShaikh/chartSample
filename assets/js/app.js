@@ -39,21 +39,6 @@ function initializeApp() {
         document.getElementById('toLatLong').value="";
         initMap("trip"); 
     });
-    //$("#btnGetRegion").click(function (event) {
-    //    $.getJSON('MappingPOCServices.asmx/GetUserRegions', function (response) {
-    //        console.log('Data=', response);
-    //    });
-    //});
-    //$("#btnSaveGrid").click(function (event) {
-    //    var data = {};
-    //    $.ajax({
-    //        url: 'MappingPOCServices.asmx/SaveUserRegion',
-    //        type: 'POST',
-    //        contentType: 'application/json',
-    //        data: JSON.stringify({ location: data }),
-    //        dataType: 'json'
-    //    });
-    //});
     $("#btnCancelGrid").click(function (event) {
         alert('Cancel grid click');
     });
