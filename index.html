@@ -93,10 +93,15 @@
                 <input type="text" class="form-control grid-input " id="gridLocation" placeholder="">
                 <button type="button" class="btn btn-success" id="btnGetRegion">Get Region</button>
                 <br />
-                 <div id="regionOnOff">
-                    <button type="button" class="btn btn-success" id="btnRegionOn">Region On</button>
-                    <button type="button" class="btn btn-success" id="btnRegionOff">Region Off</button>
-                 </div>
+                <div class="toggle"> 
+                    <div class="col-sm-1 region-padding"> Region on/off : </div> 
+                    <div class="col-sm-2 region-padding">
+                        <label class="switch">
+                            <input type="checkbox" id="switch">
+                            <div class="slider round"></div>  
+                        </label>
+                    </div>
+                </div>
                 <div id="region"></div>
                 <br />
                 <br />
