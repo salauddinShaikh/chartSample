@@ -73,11 +73,11 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label col-sm-2">Or: From Lat/Long:</div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <input type="text" class="form-control " id="fromLatLong" placeholder="">
                         </div>
-                        <div class="control-label col-sm-1">To:</div>
-                        <div class="col-sm-3">
+                        <div class="control-label col-sm-2">To Lat/Long:</div>
+                        <div class="col-sm-2">
                             <input type="text" class="form-control " id="toLatLong" placeholder="">
                         </div>
                         <button type="button" class="btn btn-success  col-sm-1" id="btnMapTrip">Map Trip</button>&nbsp;&nbsp;
@@ -93,6 +93,10 @@
                 <input type="text" class="form-control grid-input " id="gridLocation" placeholder="">
                 <button type="button" class="btn btn-success" id="btnGetRegion">Get Region</button>
                 <br />
+                 <div id="regionOnOff">
+                    <button type="button" class="btn btn-success" id="btnRegionOn">Region On</button>
+                    <button type="button" class="btn btn-success" id="btnRegionOff">Region Off</button>
+                 </div>
                 <div id="region"></div>
                 <br />
                 <br />
@@ -146,7 +150,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKzGKaXgXZRBipY2QlNWMNBEmVdbTf5mU&libraries=drawing&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKzGKaXgXZRBipY2QlNWMNBEmVdbTf5mU&libraries=drawing,places&callback=initMap"></script>
     <script src="assets/js/noSleep.js"></script>
     <script src="assets/js/mapFunctions.js"></script>
     <script src="assets/js/app.js"></script>

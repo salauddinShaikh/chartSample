@@ -16,6 +16,10 @@ function initializeApp() {
     });
     $("#btnSingleTrip").click(function (event) {
         initMap("trip");
+        document.getElementById('fromLocation').value = "";
+        document.getElementById('toLocation').value = "";
+        document.getElementById('fromLatLong').value = "";
+        document.getElementById('toLatLong').value = "";
         $('#singleTrip').show();
         $('#mapPlottingPin').hide();
         $('#singleTripTime').hide();

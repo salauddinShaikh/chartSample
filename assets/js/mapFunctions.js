@@ -1,47 +1,65 @@
 var map;
 var existingRegions = [];
+var directionsService;
+var markersTrip = [];
+        var polylines = [];
+        var shadows = [];
+        var data_dir = [];
+        var infowindow;
 function initMap(mapType) {
     //geting currrent position for all map
     if (mapType == "plot") {
         map = new google.maps.Map(document.getElementById('mapPlotting'), {
-            zoom: 15,
+            zoom: 11,
             center: { lat: -33.9, lng: 151.2 }
         });
         setCurrentPosition(map);
         getMarkers(map);
     } else if (mapType == "trip") {
         map = new google.maps.Map(document.getElementById('mapPlotting'), {
-            zoom: 15,
-            center: { lat: -33.9, lng: 151.2 }
+            zoom: 11,
+            center: { lat: -33.9, lng: 151.2 },
+             mapTypeId: 'roadmap'
         });
+        var inputFrm = document.getElementById('fromLocation');
+        var autocompleteFrm = new google.maps.places.Autocomplete(inputFrm);
+        autocompleteFrm.bindTo('bounds', map);
+        autocompleteFrm.addListener('place_changed', function () { });
+        var inputTo = document.getElementById('toLocation');
+        var autocompleteTo = new google.maps.places.Autocomplete(inputTo);
+        autocompleteTo.bindTo('bounds', map);
+        autocompleteTo.addListener('place_changed', function () { });
         setCurrentPosition(map);
     } else if (mapType == "grid") {
         map = new google.maps.Map(document.getElementById('mapPlotting'), {
-            zoom: 15,
-            center: { lat: -33.9, lng: 151.2 },
+            zoom: 11,
+            center: { lat: -33.9, lng: 151.2 }
         });
+        var regionFrm = document.getElementById('gridLocation');
+        var autocompleteregionFrm = new google.maps.places.Autocomplete(regionFrm);
+        autocompleteregionFrm.bindTo('bounds', map);
+        autocompleteregionFrm.addListener('place_changed', function () { });
         setCurrentPosition(map);
         getPolygon(map);
         grid(map);
     }
 }
+//Autopopulate Place
+
 
 // Directions 
 function setDirections(map) {
-    var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer;
-    var service = new google.maps.DistanceMatrixService;
-    directionsDisplay.setMap(map);
-    calculateAndDisplayRoute(service, directionsService, directionsDisplay);
+    calculateAndDisplayRoute();
 }
 
-function calculateAndDisplayRoute(service, directionsService, directionsDisplay) {
+//function calculateAndDisplayRoute(service, directionsService, directionsDisplay) {
+function calculateAndDisplayRoute() {
     var frm = document.getElementById('fromLocation').value;
     var to = document.getElementById('toLocation').value;
     var latfrm = document.getElementById('fromLatLong').value;
     var latto = document.getElementById('toLatLong').value;
     var origin = "";
-    var dest = ""
+    var dest = "";
     if (frm == "" && to == "" && latfrm == "" && latto == "") {
         alert("Please Enter Locations");
         $('#singleTripTime').html("");
@@ -56,50 +74,178 @@ function calculateAndDisplayRoute(service, directionsService, directionsDisplay)
         origin = "";
         dest = "";
     }
-    directionsService.route({
-        origin: origin,
-        destination: dest,
-        provideRouteAlternatives: true,
-        travelMode: 'DRIVING'
-    }, function (response, status) {
-        if (status === 'OK') {
-            for (var i = 0; i < response.routes.length; i++) {               
-                new google.maps.DirectionsRenderer({
-                    map: map,
-                    directions: response,
-                    routeIndex: i,
-                    polylineOptions: {
-                        strokeColor: "blue"
-                    }
-                })
-            }
-        } else {
-            window.alert('Directions request failed due to ' + status);
-            $(singleTripTime).html("");
-            initMap('trip');
+
+    directionsService = new google.maps.DirectionsService();
+    google.maps.Polyline.prototype.getBounds = function (startBounds) {
+        if (startBounds) {
+            var bounds = startBounds;
         }
-    });
-    service.getDistanceMatrix({
-        origins: [origin],
-        destinations: [dest],
-        travelMode: 'DRIVING',
-        unitSystem: google.maps.UnitSystem.METRIC,
-        avoidHighways: false,
-        avoidTolls: false
-    }, function (response, status) {
-        if (status !== 'OK' || response.rows[0].elements[0].status !== 'OK') {
-            $(singleTripTime).html("");
-            initMap('trip');
-        } else {
-            var distance = response.rows[0].elements[0].distance.text;
-            var time = response.rows[0].elements[0].duration.text;
-            $(singleTripTime).html("Expected Trip Time:" + distance + " : " + time)
+        else {
+            var bounds = new google.maps.LatLngBounds();
         }
-    });
+        this.getPath().forEach(function (item, index) {
+            bounds.extend(new google.maps.LatLng(item.lat(), item.lng()));
+        });
+        return bounds;
+    };
+    calcRoute(
+        origin,
+        dest
+    );
 }
 
-// Markers 
+    function calcRoute(start, end) {
+        var latlng;
+            var request = {
+                origin: start,
+                destination: end,
+                provideRouteAlternatives: true,
+                unitSystem: google.maps.UnitSystem.METRIC,
+                travelMode: 'DRIVING'
+            };
+            directionsService.route(request, function (response, status) {
+                // clear former polylines
+                for(var j in  polylines ) {
+                    polylines[j].setMap(null);
+                    shadows[j].setMap(null);
+                }
+                for (var i in markersTrip) {
+                    markersTrip[i].setMap(null);
+                }
+                polylines = [];
+                shadows = [];
+                data = [];
+                if (status == google.maps.DirectionsStatus.OK) {
+                    var bounds = new google.maps.LatLngBounds();
+                    for (var i in response.routes) {
+                        // let's make the first suggestion highlighted;
+                        var hide = (i==0 ? false : true);
+                        var shadow = drawPolylineShadow(response.routes[i].overview_path, '#606060');
+                        var line = drawPolyline(response.routes[i].overview_path, '#0000FF', hide);
+                        polylines.push(line);
+                        shadows.push(shadow);
+                        // let's add some data for the infoWindow
+                        data.push({
+                            distance: response.routes[i].legs[0].distance,
+                            duration: response.routes[i].legs[0].duration,
+                            end_address: response.routes[i].legs[0].end_address,
+                            start_address: response.routes[i].legs[0].start_address,
+                            end_location: response.routes[i].legs[0].end_location,
+                            start_location: response.routes[i].legs[0].start_location
+                        });
+                        bounds = line.getBounds(bounds);
+                        google.maps.event.addListener(shadow, 'click', function (e) {
+                            // detect which route was clicked on
+                            var index = shadows.indexOf(this);
+                            highlightRoute(index, e);
+                        });
 
+                        if (i == 0) {
+                            len = polylines[0].getPath().getArray().length;
+                            $(singleTripTime).html("Expected Trip Time:" + response.routes[0].legs[0].distance.text + " : " + response.routes[0].legs[0].duration.text);
+                            var contentString =
+                                '<span>' + response.routes[0].legs[0].distance.text + '</span><br/>' +
+                                '<span>' + response.routes[0].legs[0].duration.text + '</span><br/>' +
+                                '<span>route: ' + 0 + '</span><br/>' +
+                                '';
+                            if (infowindow) {
+                                infowindow.close();
+                                infowindow = null;
+                            }
+                            infowindow = new google.maps.InfoWindow({
+                                content: contentString,
+                                position: { lat: polylines[0].getPath().getArray()[len / 2].lat(), lng: polylines[0].getPath().getArray()[len / 2].lng() },
+                                map: map
+                            });
+                        }
+
+                    }
+                    var shape = {
+                        coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                        type: 'poly'
+                    };
+                    len = polylines[0].getPath().getArray().length;
+                    for (i = 0; i < 2; i++) {
+                        if (i==0){
+                            var position = { lat: polylines[0].getPath().getArray()[0].lat(), lng: polylines[0].getPath().getArray()[0].lng() }
+                        } else {
+                            var position = { lat: polylines[0].getPath().getArray()[len-1].lat(), lng: polylines[0].getPath().getArray()[len-1].lng() }
+                        }
+                        var marker = new google.maps.Marker({
+                            position: position,
+                            map: map,
+                            shape: shape,
+                            zIndex: 1
+                        });
+                        markersTrip.push(marker);
+                    }
+                    map.fitBounds(bounds);
+                } else {
+                    alert('There is no route available for this locations.')
+                    $(singleTripTime).html("");
+                }
+            });
+        }
+
+        // this makes one of the colored routes visible.
+        function highlightRoute(index, e) {
+            for(var j in  polylines ) {
+                if(j==index) {
+                    polylines[j].setMap(map);
+                    // feel free to customise this string
+                    var contentString =
+                        '<span>'+ data[j].distance.text +'</span><br/>'+
+                        '<span>'+ data[j].duration.text +'</span><br/>'+
+                        '<span>route: '+ j +'</span><br/>'+
+                        '';
+                    if (e) {
+                        $(singleTripTime).html("Expected Trip Time:" + data[j].distance.text + " : " + data[j].duration.text);
+                        var position = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
+                        // it may be needed to close the previous infoWindow
+                        if (infowindow) {
+                            infowindow.close();
+                            infowindow = null;
+                        }
+                        infowindow = new google.maps.InfoWindow({
+                            content: contentString,
+                            position: position,
+                            map: map
+                        });
+                    }
+                }
+                else {
+                    polylines[j].setMap(null);
+                }
+            }
+        }
+        // returns a polyline.
+        // if hide is set to true, the line is not put on the map
+        function drawPolyline(path, color, hide) {
+            var line = new google.maps.Polyline({
+                path: path,
+                strokeColor: color,
+                strokeOpacity: 0.9,
+                strokeWeight: 3
+            });
+            if(! hide) {
+                line.setMap(map);
+            }
+            return line;
+        }
+        function drawPolylineShadow(path, color, hide) {
+            var line = new google.maps.Polyline({
+                path: path,
+                strokeColor: color,
+                strokeOpacity: 0.4,
+                strokeWeight: 7
+            });
+            if(! hide) {
+                line.setMap(map);
+            }
+            return line;
+        }
+
+// Markers 
 function setMarkers(map, locas) {
     var shape = {
         coords: [1, 1, 1, 20, 18, 20, 18, 1],
@@ -168,7 +314,11 @@ var regions = {};
 var regions_count = 0;
 function grid(map) {
     document.getElementById('btnGetRegion').addEventListener('click', function () {
-        getLoc(document.getElementById('gridLocation').value, map);
+        if (document.getElementById('gridLocation').value === '') {
+            alert('Please enter Location.');
+        } else {
+            getLoc(document.getElementById('gridLocation').value, map);
+        }
     });
     var drawingManager = new google.maps.drawing.DrawingManager({
         drawingMode: google.maps.drawing.OverlayType.POLYGON,
@@ -321,16 +471,21 @@ function checkReigon(location_user, map) {
     });
 
     if (data.length) {
+        var RegionName = "";
         for (i = 0; i < data.length; i++) {
             var path = JSON.parse(data[i].LocationInfo);
             var bermudaTriangle = new google.maps.Polygon({ paths: path });
             if (google.maps.geometry.poly.containsLocation(curPosition, bermudaTriangle)) {
-                $("#region").html("Region:" + data[i].RegionName);
-                break;
-            } else {
-                $("#region").html("Region: NONE ");
-            }
+                RegionName = RegionName + data[i].RegionName + ", ";
+            } 
         }
+        if (RegionName !== "") {
+            RegionName = RegionName.substring(0, RegionName.length - 2);
+        }
+        else {
+            RegionName = "NONE";
+        }
+        $("#region").html("Region:" + RegionName);
     }
 
 }
